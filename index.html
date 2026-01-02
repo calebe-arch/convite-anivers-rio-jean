@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convite do Jean!</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #616161, #000000);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
+
+    .story {
+      background: linear-gradient(160deg, #111, #444444);
+      border-radius: 28px;
+      padding: 28px 22px;
+      max-width: 420px;
+      width: 100%;
+      color: #fff;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+      position: relative;
+      overflow: hidden;
+      animation: subir 1s ease;
+    }
+
+    .story::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.15), transparent);
+      animation: brilho 3s infinite;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 5px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .nome {
+      text-align: center;
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #ff9aa2;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .info {
+      text-align: center;
+      font-size: 1.05em;
+      line-height: 1.6;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contador {
+      background: rgba(255,255,255,0.1);
+      border-radius: 18px;
+      padding: 14px;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tempo {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+
+    .box {
+      width: 23%;
+      background: rgba(0,0,0,0.4);
+      border-radius: 14px;
+      padding: 10px 5px;
+      text-align: center;
+    }
+
+    .box span {
+      display: block;
+      font-size: 1.3em;
+      font-weight: bold;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 35px;
+      border: none;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-mapa {
+      background: #fff;
+      color: #b0003a;
+    }
+
+    .btn-mapa:hover {
+      transform: scale(1.04);
+      background: #ffe1e8;
+    }
+
+    .btn-whats {
+      background: #25d366;
+      color: #fff;
+    }
+
+    .btn-whats:hover {
+      transform: scale(1.04);
+      background: #1ebd5a;
+    }
+
+    .presentes {
+      margin-top: 15px;
+      font-size: 0.95em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .presentes h2 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .presentes ul {
+      padding-left: 18px;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 0.85em;
+      opacity: 0.85;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes subir {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes brilho {
+      0% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+      100% { transform: translateX(100%); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="story">
+    <h1>Convite Especial 🎉</h1>
+    <div class="nome">Calebe</div>
+
+    <div class="info">
+      Vem comemorar meu XV 😎  
+      <br><strong>📅 Data:</strong> 14/01  
+      <br><strong>⏰ Horário:</strong> 14h  
+      <br><strong>📍 Local:</strong> clique abaixo
+    </div>
+
+    <div class="contador">
+      ⏳ Contagem regressiva
+      <div class="tempo">
+        <div class="box"><span id="dias">0</span>dias</div>
+        <div class="box"><span id="horas">0</span>h</div>
+        <div class="box"><span id="minutos">0</span>min</div>
+        <div class="box"><span id="segundos">0</span>seg</div>
+      </div>
+    </div>
+
+    <button class="btn btn-mapa" onclick="abrirMapa()">
+      📍 Ver local
+    </button>
+
+    <button class="btn btn-whats" onclick="confirmarPresenca()">
+      📩 Confirmar presença
+    </button>
+
+    <div class="presentes">
+      <h2>🎁 Dicas de presente</h2>
+      <ul>
+        <li>Perfume 😌</li>
+        <li>Roupas ou acessórios 👕</li>
+        <li>Pix (nunca falha 😅)</li>
+      </ul>
+    </div>
+
+    <footer>
+      Sua presença já é um presentão ❤️
+    </footer>
+  </div>
+
+  <script>
+    // DATA DO EVENTO
+    const dataEvento = new Date(2026, 0, 14, 14, 0, 0);
+
+    function atualizarContador() {
+      const agora = new Date();
+      const diff = dataEvento - agora;
+
+      if (diff <= 0) {
+        document.querySelector(".contador").innerHTML = "🎉 Já começou!";
+        return;
+      }
+
+      document.getElementById("dias").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+      document.getElementById("horas").innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      document.getElementById("minutos").innerText = Math.floor((diff / (1000 * 60)) % 60);
+      document.getElementById("segundos").innerText = Math.floor((diff / 1000) % 60);
+    }
+
+    setInterval(atualizarContador, 1000);
+    atualizarContador();
+
+    function abrirMapa() {
+      window.open(
+        "https://maps.app.goo.gl/2FGWersUxH9giCBw6"
+      );
+    }
+
+    function confirmarPresenca() {
+      // TROQUE PELO SEU NÚMERO (DDI+DDD+NUMERO)
+      const telefone = "5521990148062";
+      const mensagem = encodeURIComponent(
+        "Oi! Confirmo minha presença no aniversário do Jean 🥳 "
+      );
+
+      window.open(
+        `https://wa.me/${telefone}?text=${mensagem}`,
+        "_blank"
+      );
+    }
+  </script>
+
+</body>
+</html>
